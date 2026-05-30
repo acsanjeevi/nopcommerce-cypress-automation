@@ -1,0 +1,22 @@
+{
+  "users": {
+    "getList": "**/Admin/Customer/CustomerList**",
+    "delete":  "**/Admin/Customer/Delete/**"
+  },
+  "categories": {
+    "getList": "**/Admin/Category/CategoryList**",
+    "delete":  "**/Admin/Category/Delete/**"
+  },
+  "products": {
+    "getList": "**/Admin/Product/ProductList**",
+    "delete":  "**/Admin/Product/Delete/**"
+  },
+  "orders": {
+    "getList": "**/Admin/Order/OrderList**",
+    "delete":  "**/Admin/Order/Cancel/**"
+  },
+  "cart": {
+    "getCart": "**/ShoppingCart/**",
+    "addItem": "**/addproducttocart/**"
+  }
+}

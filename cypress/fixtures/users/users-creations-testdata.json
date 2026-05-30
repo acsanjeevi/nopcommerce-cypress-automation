@@ -1,0 +1,22 @@
+{
+  "records": [
+    {
+      "firstName": "Alice",
+      "lastName": "Johnson",
+      "email": "alice.johnson@teststore.com",
+      "password": "SecurePass@123"
+    },
+    {
+      "firstName": "Bob",
+      "lastName": "Williams",
+      "email": "bob.williams@teststore.com",
+      "password": "SecurePass@123"
+    },
+    {
+      "firstName": "Carol",
+      "lastName": "Smith",
+      "email": "carol.smith@teststore.com",
+      "password": "SecurePass@123"
+    }
+  ]
+}

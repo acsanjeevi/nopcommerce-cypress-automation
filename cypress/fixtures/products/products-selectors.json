@@ -1,0 +1,21 @@
+{
+  "addButton": "a[href*='/Product/Create']",
+  "createButton": "button[name='save']",
+  "updateButton": "button[name='save']",
+  "editOption": "td:last-child a",
+  "searchInput": "#SearchProductName",
+  "searchSkuInput": "#SearchSku",
+  "searchButton": "#search-products",
+  "tableRows": "#products-grid tbody tr",
+  "tableBody": "#products-grid",
+  "toastSuccess": ".alert-success",
+  "toastError": ".alert-danger",
+  "noDataMessage": "#products-grid .dataTables_empty",
+  "productNameInput": "#Name",
+  "skuInput": "#Sku",
+  "priceInput": "#Price",
+  "publishedCheckbox": "#Published",
+  "productNameError": "#Name-error",
+  "priceError": "#Price-error",
+  "paginatorInfo": "#products-grid"
+}

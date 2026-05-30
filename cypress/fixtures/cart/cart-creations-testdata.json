@@ -1,0 +1,31 @@
+{
+  "records": [
+    {
+      "product": "Apple MacBook Pro 13-inch",
+      "quantity": 1,
+      "billingName": "Alice Johnson",
+      "billingAddress": "123 Main Street, Los Angeles, CA 90001",
+      "cardNumber": "4111111111111111",
+      "cardExpiry": "12/28",
+      "cardCvv": "123"
+    },
+    {
+      "product": "Apple MacBook Pro 13-inch",
+      "quantity": 1,
+      "billingName": "Bob Williams",
+      "billingAddress": "456 Oak Avenue, New York, NY 10001",
+      "cardNumber": "4111111111111111",
+      "cardExpiry": "12/28",
+      "cardCvv": "456"
+    },
+    {
+      "product": "Apple MacBook Pro 13-inch",
+      "quantity": 1,
+      "billingName": "Carol Smith",
+      "billingAddress": "789 Pine Road, Chicago, IL 60601",
+      "cardNumber": "4111111111111111",
+      "cardExpiry": "12/28",
+      "cardCvv": "789"
+    }
+  ]
+}

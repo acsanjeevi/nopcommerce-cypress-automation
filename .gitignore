@@ -1,0 +1,26 @@
+# ── Dependencies ─────────────────────────────────────────────────────────────
+node_modules/
+
+# ── Environment / secrets — NEVER commit ─────────────────────────────────────
+secured.env
+cypress.env.json
+
+# ── Generated test artefacts (rebuilt on every run) ──────────────────────────
+cypress/reports/
+cypress/screenshots/
+cypress/videos/
+cypress/downloads/
+
+# ── Chrome automation profile (binary, large, user-specific) ─────────────────
+cypress/chrome-profile/
+
+# ── Build output ──────────────────────────────────────────────────────────────
+dist/
+*.tsbuildinfo
+
+# ── OS / editor artefacts ─────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.log
+.idea/
+.vscode/settings.json

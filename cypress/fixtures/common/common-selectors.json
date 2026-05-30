@@ -1,0 +1,17 @@
+{
+  "contextMenu": ".pi-ellipsis-v",
+  "searchField": "#search",
+  "editMenuButton": "#Edit",
+  "addButton": "[label='Add']",
+  "createButton": "p-button:contains(\"Create\")",
+  "updateButton": "p-button:contains(\"Update\")",
+  "deleteButton": "p-button:contains(\"Delete\")",
+  "cancelButton": "[label='Cancel']",
+  "saveButton": "#persist-button",
+  "columnCell": "td",
+  "tableRow": "tbody tr",
+  "textWithColor": ".p-tag",
+  "exportDropdown": "p-splitbutton .p-button-icon-only",
+  "filterLogs": ".date-range-container .p-dropdown-label",
+  "calendar": "p-calendar input"
+}

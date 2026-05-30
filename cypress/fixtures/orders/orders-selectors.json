@@ -1,0 +1,18 @@
+{
+  "editOption": "td:last-child a",
+  "searchEmailInput": "#BillingEmail",
+  "searchOrderNumber": "#GoDirectlyToCustomOrderNumber",
+  "searchStartDate": "#StartDate",
+  "searchEndDate": "#EndDate",
+  "searchButton": "#search-orders",
+  "tableRows": "#orders-grid tbody tr",
+  "tableBody": "#orders-grid",
+  "toastSuccess": ".alert-success",
+  "toastError": ".alert-danger",
+  "noDataMessage": "#orders-grid .dataTables_empty",
+  "orderStatusSelect": "#OrderStatusId",
+  "saveButton": "button[name='save']",
+  "paginatorInfo": "#orders-grid",
+  "orderStatusBadge": "td:nth-child(3)",
+  "customerColumn": "td:nth-child(6)"
+}

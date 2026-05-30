@@ -1,0 +1,35 @@
+{
+  "toastMessages": {
+    "toastMessageTitles": {
+      "toastSuccessTitle": "Success",
+      "toastFailedTitle": "Failed"
+    },
+    "usersModule": {
+      "createToastMessage": "New Customer '{recordName}' created successfully.",
+      "editToastMessage": "Customer '{recordName}' details updated successfully.",
+      "deleteToastMessage": "Customer '{recordName}' deleted successfully."
+    },
+    "categoriesModule": {
+      "createToastMessage": "New Category '{recordName}' created successfully.",
+      "editToastMessage": "Category '{recordName}' details updated successfully.",
+      "deleteToastMessage": "Category '{recordName}' deleted successfully."
+    },
+    "productsModule": {
+      "createToastMessage": "New Product '{recordName}' created successfully.",
+      "editToastMessage": "Product '{recordName}' details updated successfully.",
+      "deleteToastMessage": "Product '{recordName}' deleted successfully."
+    },
+    "ordersModule": {
+      "createToastMessage": "New Order '{recordName}' placed successfully.",
+      "editToastMessage": "Order '{recordName}' updated successfully.",
+      "deleteToastMessage": "Order '{recordName}' cancelled successfully."
+    },
+    "cartModule": {
+      "addToCartMessage": "Product added to cart successfully.",
+      "removeFromCartMessage": "Product removed from cart.",
+      "checkoutToastMessage": "Order placed successfully.",
+      "couponAppliedMessage": "Coupon applied successfully.",
+      "couponInvalidMessage": "Invalid or expired coupon code."
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "moduleUrl": "/Admin/Product/List",
+  "addUrl": "/Admin/Product/Create",
+  "listApi": "**/Admin/Product/ProductList**",
+  "tableHeaders": ["Picture", "Name", "SKU", "Price", "Stock quantity", "Published"],
+  "contextMenuOptions": ["Edit"],
+  "validInputs": {
+    "productName": "Test Headset",
+    "sku": "TP-TEST-001",
+    "price": "19.99"
+  },
+  "updatedInputs": {
+    "price": "17.99"
+  },
+  "invalidInputs": {
+    "productNameTooLong": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "priceNegative": "-10",
+    "priceAlpha": "abc"
+  },
+  "validationMessages": {
+    "noDataMessage": "No data available in table",
+    "requiredField": "The Product Name field is required.",
+    "duplicateRecord": "already exists"
+  },
+  "searchText": "Wireless Headphones",
+  "deleteRecords": ["Wireless Headphones", "Smart Watch", "Bluetooth Speaker", "Test Headset"]
+}

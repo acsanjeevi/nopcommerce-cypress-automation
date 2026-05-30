@@ -1,0 +1,13 @@
+{
+  "moduleUrl": "/notebooks",
+  "cartUrl": "/cart",
+  "checkoutUrl": "/onepagecheckout",
+  "listApi": "**/ShoppingCart/**",
+  "addItemApi": "**/addproducttocart/catalog/**",
+  "productName": "Apple MacBook Pro 13-inch",
+  "searchText": "Apple MacBook",
+  "validationMessages": {
+    "cartEmpty": "Your Shopping Cart is empty!",
+    "orderPlaced": "Your order has been successfully processed!"
+  }
+}

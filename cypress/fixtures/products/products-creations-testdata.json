@@ -1,0 +1,19 @@
+{
+  "records": [
+    {
+      "productName": "Wireless Headphones",
+      "sku": "WH-PRO-001",
+      "price": "79.99"
+    },
+    {
+      "productName": "Smart Watch",
+      "sku": "SW-PRO-001",
+      "price": "149.99"
+    },
+    {
+      "productName": "Bluetooth Speaker",
+      "sku": "BS-PRO-001",
+      "price": "49.99"
+    }
+  ]
+}

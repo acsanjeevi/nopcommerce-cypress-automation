@@ -1,0 +1,22 @@
+{
+  "categoryUrl": "/notebooks",
+  "cartUrl": "/cart",
+  "checkoutUrl": "/onepagecheckout",
+  "productQuantity": "2",
+  "billingAddress": {
+    "firstName": "Test",
+    "lastName": "Buyer",
+    "email": "acsanjeevi@gmail.com",
+    "country": "United States of America",
+    "city": "Los Angeles",
+    "address1": "123 Automation Street",
+    "zip": "90001",
+    "phone": "3101234567"
+  },
+  "paymentMethod": "Payments.CheckMoneyOrder",
+  "adminModuleUrl": "/Admin/Order/List",
+  "adminListApi": "**/Admin/Order/OrderList**",
+  "customerEmail": "acsanjeevi@gmail.com",
+  "orderSuccessMessage": "Your order has been successfully processed!",
+  "cancelledStatus": "Cancelled"
+}

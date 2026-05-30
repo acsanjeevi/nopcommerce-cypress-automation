@@ -1,0 +1,63 @@
+version: '3.9'
+
+services:
+
+  postgres:
+    image: postgres:15
+    container_name: nopcommerce-postgres
+
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: nopcommerce
+      POSTGRES_USER: nopuser
+      POSTGRES_PASSWORD: nopassword
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgres/init:/docker-entrypoint-initdb.d
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nopuser -d nopcommerce"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+    networks:
+      - nop_network
+
+  nopcommerce:
+    image: nopcommerceteam/nopcommerce:4.70.5
+    container_name: nopcommerce-app
+
+    restart: unless-stopped
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    environment:
+      ASPNETCORE_URLS: http://+:8080
+
+    ports:
+      - "8080:8080"
+
+    volumes:
+      - nop_data:/app/App_Data
+      - nop_logs:/app/logs
+
+    networks:
+      - nop_network
+
+volumes:
+  postgres_data:
+  nop_data:
+  nop_logs:
+
+networks:
+  nop_network:
+    driver: bridge

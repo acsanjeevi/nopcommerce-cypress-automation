@@ -1,0 +1,16 @@
+{
+  "records": [
+    {
+      "categoryName": "Electronics",
+      "description": "Electronic devices and accessories"
+    },
+    {
+      "categoryName": "Clothing",
+      "description": "Fashion and apparel for all occasions"
+    },
+    {
+      "categoryName": "Home Appliances",
+      "description": "Household appliances and smart home devices"
+    }
+  ]
+}

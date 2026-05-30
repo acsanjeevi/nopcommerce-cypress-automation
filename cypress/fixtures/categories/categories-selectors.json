@@ -1,0 +1,17 @@
+{
+  "addButton": "a[href*='/Category/Create']",
+  "createButton": "button[name='save']",
+  "updateButton": "button[name='save']",
+  "editOption": "td:last-child a",
+  "searchInput": "#SearchCategoryName",
+  "searchButton": "#search-categories",
+  "tableRows": "#categories-grid tbody tr",
+  "tableBody": "#categories-grid",
+  "toastSuccess": ".alert-success",
+  "toastError": ".alert-danger",
+  "noDataMessage": "#categories-grid .dataTables_empty",
+  "categoryNameInput": "#Name",
+  "publishedCheckbox": "#Published",
+  "categoryNameError": "#Name-error",
+  "paginatorInfo": "#categories-grid"
+}

@@ -1,0 +1,34 @@
+{
+  "moduleUrl": "/Admin/Customer/List",
+  "addUrl": "/Admin/Customer/Create",
+  "listApi": "**/Admin/Customer/CustomerList**",
+  "singleApi": "**/Admin/Customer/Edit/**",
+  "refreshApi": "**/Admin/Customer/CustomerList**",
+  "tableHeaders": ["Name", "Customer roles", "Email", "Active", "Created on", "Last activity"],
+  "contextMenuOptions": ["Edit"],
+  "validInputs": {
+    "firstName": "Jane",
+    "lastName": "Tester",
+    "email": "jane.tester@teststore.com",
+    "password": "SecurePass@123",
+    "phone": "3105551234"
+  },
+  "updatedInputs": {
+    "lastName": "Tester Updated",
+    "phone": "3105559876"
+  },
+  "invalidInputs": {
+    "firstNameTooLong": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "emailInvalid": "not-a-valid-email",
+    "passwordTooShort": "abc"
+  },
+  "validationMessages": {
+    "noDataMessage": "No data found",
+    "requiredField": "The field is required",
+    "invalidEmail": "Please enter a valid email address.",
+    "duplicateRecord": "already registered"
+  },
+  "searchText": "Alice",
+  "searchEmail": "alice.johnson@teststore.com",
+  "deleteRecords": ["Alice", "Bob", "Carol", "Jane"]
+}

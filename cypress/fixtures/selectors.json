@@ -1,0 +1,19 @@
+{
+  "pkiSelectors": {
+    "breadCrumb": ".topbar-breadcrumb",
+    "addButton": "[label='Add']",
+    "searchField": "#search",
+    "searchInput": "input#search",
+    "deleteMenuButton": "#Delete",
+    "deleteButton": "p-button:contains(\"Delete\")",
+    "overviewTable": ".p-datatable-tbody > tr.ng-star-inserted",
+    "columnCell": "td",
+    "tooltip": ".p-tooltip",
+    "tooltipContentContainer": ".p-tooltip-text"
+  },
+  "tableValidation": {
+    "refreshButton": "button[aria-label='Refresh']",
+    "clickElipsisButton": "td i.pi-ellipsis-v",
+    "paginatorRowCount": ".p-paginator-current"
+  }
+}

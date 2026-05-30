@@ -1,0 +1,22 @@
+{
+  "records": [
+    {
+      "customer": "TestUser_Bulk 001",
+      "product": "TestProduct_Bulk_001",
+      "quantity": "1",
+      "shippingAddress": "100 Bulk Test St, City A, ST 10001"
+    },
+    {
+      "customer": "TestUser_Bulk 002",
+      "product": "TestProduct_Bulk_002",
+      "quantity": "2",
+      "shippingAddress": "200 Bulk Test St, City B, ST 20002"
+    },
+    {
+      "customer": "TestUser_Bulk 003",
+      "product": "TestProduct_Bulk_003",
+      "quantity": "3",
+      "shippingAddress": "300 Bulk Test St, City C, ST 30003"
+    }
+  ]
+}

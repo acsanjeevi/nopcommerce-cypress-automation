@@ -1,0 +1,19 @@
+{
+  "moduleUrl": "/Admin/Order/List",
+  "listApi": "**/Admin/Order/OrderList**",
+  "tableHeaders": ["Custom Order Number", "Store", "Order status", "Payment status", "Shipping status", "Customer", "Created on"],
+  "contextMenuOptions": ["Edit"],
+  "validInputs": {
+    "customerEmail": "victoria_victoria@nopCommerce.com"
+  },
+  "updatedInputs": {
+    "orderStatus": "2"
+  },
+  "validationMessages": {
+    "noDataMessage": "No data available in table"
+  },
+  "searchEmail": "acsanjeevi@gmail.com",
+  "searchText": "acsanjeevi@gmail.com",
+  "deleteRecords": ["TEST-ORD-001", "TEST-ORD-002", "TEST-ORD-003"],
+  "orderStatuses": ["Pending", "Processing", "Complete", "Cancelled"]
+}

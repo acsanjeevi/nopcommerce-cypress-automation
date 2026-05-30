@@ -1,0 +1,23 @@
+{
+  "moduleUrl": "/Admin/Category/List",
+  "addUrl": "/Admin/Category/Create",
+  "listApi": "**/Admin/Category/List**",
+  "tableHeaders": ["Name", "Published"],
+  "contextMenuOptions": ["Edit"],
+  "validInputs": {
+    "categoryName": "Test Category"
+  },
+  "updatedInputs": {
+    "categoryName": "Test Category Updated"
+  },
+  "invalidInputs": {
+    "categoryNameTooLong": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+  },
+  "validationMessages": {
+    "noDataMessage": "No data available in table",
+    "requiredField": "The Category Name field is required.",
+    "duplicateRecord": "already exists"
+  },
+  "searchText": "Electronics",
+  "deleteRecords": ["Electronics", "Clothing", "Home Appliances"]
+}
