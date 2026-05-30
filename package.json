@@ -1,6 +1,6 @@
 {
   "name": "ecommerce-cypress-automation",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "scripts": {
     "cy:open": "cypress open",
     "cy:run": "ts-node run-tests.ts role=admin",
