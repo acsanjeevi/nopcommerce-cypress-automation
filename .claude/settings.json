@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Start-Sleep -Seconds 90)",
+      "Bash(Get-Content \"C:\\\\Users\\\\SANJEE~1.AAN\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\d--Automation-Demo\\\\cdd24d2d-7e66-47bc-b930-e391703d2b09\\\\tasks\\\\b5ie5y0gm.output\" -Tail 60)",
+      "PowerShell(Set-Location \"d:\\\\Automation_Demo\"; $env:ELECTRON_RUN_AS_NODE = ''; node_modules\\\\.bin\\\\cypress.cmd run --browser chrome 2>&1)",
+      "PowerShell(docker-compose --version 2>&1)",
+      "PowerShell(Start-Process \"C:\\\\Program Files\\\\Docker\\\\Docker\\\\Docker Desktop.exe\" -ErrorAction SilentlyContinue)",
+      "PowerShell($timeout = 120; $elapsed = 0; Write-Host \"Waiting for Docker daemon...\"; while \\($elapsed -lt $timeout\\) { Start-Sleep -Seconds 5; $elapsed += 5; $result = docker info 2>&1; if \\($LASTEXITCODE -eq 0\\) { Write-Host \"Docker is ready after ${elapsed}s\"; break }; Write-Host \"Still waiting... ${elapsed}s\" }; if \\($elapsed -ge $timeout\\) { Write-Host \"Timed out waiting for Docker\" })",
+      "Bash(New-Item -Path \"d:\\\\Automation_Demo\\\\cypress\\\\support\\\\constants.ts\" -ItemType File -Force)",
+      "Bash(Out-Null)",
+      "Bash(Write-Host \"created\")",
+      "PowerShell(docker info 2>&1)",
+      "PowerShell(docker context ls 2>&1)",
+      "PowerShell(docker context use desktop-linux 2>&1)",
+      "PowerShell(New-Item -Path \"d:\\\\Automation_Demo\\\\cypress\\\\e2e\\\\setup\" -ItemType Directory -Force)",
+      "Bash(npm install *)",
+      "Bash(node -e \"console.log\\('Node works:', process.version\\)\")",
+      "Bash(npx ts-node *)",
+      "Bash(npm run *)",
+      "Bash(CYPRESS_SKIP_VERIFY=true npx ts-node run-tests.ts role=admin)",
+      "Bash(cmd.exe /c \"node_modules\\\\\\\\.bin\\\\\\\\cypress run --browser chrome --headed --spec \\\\\"cypress/e2e/setup/nopcommerce-setup.cy.ts,cypress/e2e/categories/categories-creation.cy.ts\\\\\"\")"
+    ]
+  }
+}
