@@ -1,0 +1,10 @@
+{
+  "adminLogin": "/login",
+  "categoryList": "/Admin/Category/CategoryList",
+  "productList": "/Admin/Product/ProductList",
+  "customerList": "/Admin/Customer/CustomerList",
+  "orderList": "/Admin/Order/OrderList",
+  "storefrontUrl": "/",
+  "invalidEndpoint": "/api/nonexistent-endpoint",
+  "storefrontCategory": "/electronics"
+}
