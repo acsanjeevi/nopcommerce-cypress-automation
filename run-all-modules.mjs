@@ -34,8 +34,23 @@ const PHASES = [
   { name: 'Phase 6 — Cleanup',   parallel: false, specs: ['cypress/e2e/deleterecords/wipeout-allcreatedrecords.cy.ts'] },
 ];
 
+const MAX_CONCURRENCY = 2;
+
 function runSpec(spec) {
   return cypress.run({ browser, headed, spec });
+}
+
+async function runWithConcurrency(specs, limit) {
+  const results = [];
+  const queue = [...specs];
+  async function worker() {
+    while (queue.length > 0) {
+      const spec = queue.shift();
+      results.push({ spec, result: await runSpec(spec) });
+    }
+  }
+  await Promise.all(Array.from({ length: Math.min(limit, specs.length) }, worker));
+  return specs.map((s) => results.find((r) => r.spec === s).result);
 }
 
 function collectResults(result, allRuns) {
@@ -103,7 +118,7 @@ try {
       console.log(`\n▸ ${phase.name} (${phase.parallel ? phase.specs.length + ' parallel' : 'sequential'})`);
 
       if (phase.parallel && phase.specs.length > 1) {
-        const results = await Promise.all(phase.specs.map(runSpec));
+        const results = await runWithConcurrency(phase.specs, MAX_CONCURRENCY);
         for (const r of results) {
           if (r.status === 'failed') {
             console.error(`  ✗ A spec in ${phase.name} failed to launch.`);
