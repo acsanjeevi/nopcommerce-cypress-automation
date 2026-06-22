@@ -50,18 +50,32 @@ describe('Application Setup', () => {
       cy.get(INSTALL.adminPassword).clear().type(ADMIN.password);
       cy.get(INSTALL.confirmPassword).clear().type(ADMIN.password);
 
-      cy.get(INSTALL.createSampleData).then(($cb) => {
-        if (!$cb.is(':checked')) cy.wrap($cb).check({ force: true });
-      });
-      cy.get(INSTALL.subscribeNewsletter).then(($cb) => {
-        if ($cb.is(':checked')) cy.wrap($cb).uncheck({ force: true });
+      cy.get('body').then(($body) => {
+        const $sampleCb = $body.find('input[name="InstallSampleData"][type="checkbox"]');
+        if ($sampleCb.length) {
+          if (!$sampleCb.is(':checked')) cy.wrap($sampleCb).check({ force: true });
+        } else {
+          cy.get(INSTALL.createSampleData).invoke('val', 'true');
+        }
+
+        const $nlCb = $body.find('input[name="SubscribeNewsletters"][type="checkbox"]');
+        if ($nlCb.length) {
+          if ($nlCb.is(':checked')) cy.wrap($nlCb).uncheck({ force: true });
+        } else {
+          cy.get(INSTALL.subscribeNewsletter).invoke('val', 'false');
+        }
       });
 
       cy.get(INSTALL.dataProvider).select(DB.provider);
       cy.wait(WAIT.medium);
 
-      cy.get(INSTALL.createDatabase).then(($cb) => {
-        if (!$cb.is(':checked')) cy.wrap($cb).check({ force: true });
+      cy.get('body').then(($body) => {
+        const $dbCb = $body.find('input[name="CreateDatabaseIfNotExists"][type="checkbox"]');
+        if ($dbCb.length) {
+          if (!$dbCb.is(':checked')) cy.wrap($dbCb).check({ force: true });
+        } else {
+          cy.get(INSTALL.createDatabase).invoke('val', 'true');
+        }
       });
 
       cy.get(INSTALL.serverName).clear().type(DB.server);
