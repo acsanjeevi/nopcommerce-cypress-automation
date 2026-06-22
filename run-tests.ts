@@ -6,10 +6,11 @@ const role = args.find((a) => a.startsWith('role='))?.split('=')[1] ?? 'admin';
 delete process.env['ELECTRON_RUN_AS_NODE'];
 process.env['CYPRESS_SKIP_VERIFY'] = 'true';
 
-console.log(`\n=== Running all Cypress tests as role: ${role} ===\n`);
+const browser = process.env['BROWSER'] || 'chrome';
+console.log(`\n=== Running all Cypress tests as role: ${role} | browser: ${browser} ===\n`);
 
 try {
-  execSync(`npx cypress run --browser chrome --headed --env role=${role}`, {
+  execSync(`npx cypress run --browser ${browser} --headed --env role=${role}`, {
     stdio: 'inherit',
     env:   { ...process.env, ELECTRON_RUN_AS_NODE: undefined },
   });

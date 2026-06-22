@@ -11,6 +11,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chrome, firefox, edge]
+
+    name: Tests — ${{ matrix.browser }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -23,6 +30,20 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Install Firefox
+        if: matrix.browser == 'firefox'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y firefox
+
+      - name: Install Edge
+        if: matrix.browser == 'edge'
+        run: |
+          curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /usr/share/keyrings/microsoft-edge.gpg
+          echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft-edge.gpg] https://packages.microsoft.com/repos/edge stable main" | sudo tee /etc/apt/sources.list.d/microsoft-edge.list
+          sudo apt-get update
+          sudo apt-get install -y microsoft-edge-stable
 
       - name: Start nopCommerce via Docker Compose
         run: docker compose -f nopcommerce-docker/docker-compose.yml up -d
@@ -59,14 +80,16 @@ jobs:
           CYPRESS_REPORT_FILENAME=[name]-report
           EOF
 
-      - name: Run Cypress tests
+      - name: Run Cypress tests (${{ matrix.browser }})
+        env:
+          BROWSER: ${{ matrix.browser }}
         run: node run-all-modules.mjs
 
       - name: Upload HTML test report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: cypress-html-report
+          name: cypress-html-report-${{ matrix.browser }}
           path: cypress/reports/*.html
           retention-days: 30
 
@@ -74,7 +97,7 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: cypress-screenshots
+          name: cypress-screenshots-${{ matrix.browser }}
           path: cypress/screenshots/
           retention-days: 14
 
@@ -82,6 +105,6 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: cypress-videos
+          name: cypress-videos-${{ matrix.browser }}
           path: cypress/videos/
           retention-days: 14

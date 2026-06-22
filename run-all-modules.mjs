@@ -5,14 +5,15 @@ process.env.CYPRESS_SKIP_VERIFY = 'true';
 
 console.log('\n' + '═'.repeat(68));
 console.log('  nopCommerce Automation — Full Test Run (All 12 Modules)');
-const isCI = !!process.env.CI;
-console.log(`  Browser: Chrome (${isCI ? 'headless' : 'headed'})`);
+const isCI    = !!process.env.CI;
+const browser = process.env.BROWSER || 'chrome';
+console.log(`  Browser: ${browser} (${isCI ? 'headless' : 'headed'})`);
 console.log('═'.repeat(68) + '\n');
 
 try {
   const result = await cypress.run({
-    browser: 'chrome',
-    headed:  !isCI,
+    browser,
+    headed: !isCI,
   });
 
   const status  = result.status;
