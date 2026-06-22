@@ -66,7 +66,14 @@ describe('Application Setup', () => {
         }
       });
 
-      cy.get(INSTALL.dataProvider).select(DB.provider);
+      cy.get(INSTALL.dataProvider).find('option').then(($opts) => {
+        const pgOpt = $opts.filter((_, el) =>
+          el.textContent!.toLowerCase().includes('postgre')
+        );
+        if (pgOpt.length) {
+          cy.get(INSTALL.dataProvider).select(pgOpt.val() as string);
+        }
+      });
       cy.wait(WAIT.medium);
 
       cy.get('body').then(($body) => {
