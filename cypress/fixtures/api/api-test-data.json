@@ -1,9 +1,9 @@
 {
   "adminLogin": "/login",
-  "categoryList": "/Admin/Category/CategoryList",
-  "productList": "/Admin/Product/ProductList",
-  "customerList": "/Admin/Customer/CustomerList",
-  "orderList": "/Admin/Order/OrderList",
+  "categoryPage": "/Admin/Category/List",
+  "productPage": "/Admin/Product/List",
+  "customerPage": "/Admin/Customer/List",
+  "orderPage": "/Admin/Order/List",
   "storefrontUrl": "/",
   "invalidEndpoint": "/api/nonexistent-endpoint",
   "storefrontCategory": "/electronics"

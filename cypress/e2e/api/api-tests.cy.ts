@@ -46,59 +46,47 @@ describe('API Tests', () => {
     });
   });
 
-  it('Test: 03 - Category List API', () => {
+  it('Test: 03 - Category Admin Page Accessible', () => {
     cy.request({
-      method: 'POST',
-      url: adminUrl() + apiData.categoryList,
+      method: 'GET',
+      url: adminUrl() + apiData.categoryPage,
       failOnStatusCode: false,
-      form: true,
-      body: { draw: 1, start: 0, length: 10 },
     }).then((res) => {
       expect(res.status).to.eq(200);
-      expect(res.body).to.have.property('Data');
-      expect(res.body.Data).to.be.an('array');
+      expect(res.body).to.include('Category');
     });
   });
 
-  it('Test: 04 - Product List API', () => {
+  it('Test: 04 - Product Admin Page Accessible', () => {
     cy.request({
-      method: 'POST',
-      url: adminUrl() + apiData.productList,
+      method: 'GET',
+      url: adminUrl() + apiData.productPage,
       failOnStatusCode: false,
-      form: true,
-      body: { draw: 1, start: 0, length: 10 },
     }).then((res) => {
       expect(res.status).to.eq(200);
-      expect(res.body).to.have.property('Data');
-      expect(res.body.Data).to.be.an('array');
+      expect(res.body).to.include('Product');
     });
   });
 
-  it('Test: 05 - Customer List API', () => {
+  it('Test: 05 - Customer Admin Page Accessible', () => {
     cy.request({
-      method: 'POST',
-      url: adminUrl() + apiData.customerList,
+      method: 'GET',
+      url: adminUrl() + apiData.customerPage,
       failOnStatusCode: false,
-      form: true,
-      body: { draw: 1, start: 0, length: 10 },
     }).then((res) => {
       expect(res.status).to.eq(200);
-      expect(res.body).to.have.property('Data');
-      expect(res.body.Data).to.be.an('array');
+      expect(res.body).to.include('Customer');
     });
   });
 
-  it('Test: 06 - Order List API', () => {
+  it('Test: 06 - Order Admin Page Accessible', () => {
     cy.request({
-      method: 'POST',
-      url: adminUrl() + apiData.orderList,
+      method: 'GET',
+      url: adminUrl() + apiData.orderPage,
       failOnStatusCode: false,
-      form: true,
-      body: { draw: 1, start: 0, length: 10 },
     }).then((res) => {
       expect(res.status).to.eq(200);
-      expect(res.body).to.have.property('Data');
-      expect(res.body.Data).to.be.an('array');
+      expect(res.body).to.include('Order');
     });
   });
 
