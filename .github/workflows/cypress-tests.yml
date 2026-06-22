@@ -61,7 +61,8 @@ jobs:
             docker compose -f nopcommerce-docker/docker-compose.yml logs
             exit 1
           fi
-          echo "nopCommerce is ready!"
+          echo "nopCommerce is ready! Waiting 30s for full stabilization..."
+          sleep 30
 
       - name: Create secured.env
         run: |

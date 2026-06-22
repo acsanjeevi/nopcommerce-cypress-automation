@@ -33,8 +33,12 @@ const INSTALL = {
 
 describe('Application Setup', () => {
 
-  it('Test: 01 - Verify Application is Ready', () => {
-    cy.visit(Cypress.env('url') as string, { failOnStatusCode: false });
+  it('Test: 01 - Verify Application is Ready', { retries: { runMode: 3 } }, () => {
+    cy.visit(Cypress.env('url') as string, {
+      failOnStatusCode: false,
+      retryOnNetworkFailure: true,
+      timeout: 60_000,
+    });
     cy.waitForSpinnerToDisappear();
 
     cy.title().then((pageTitle) => {
@@ -43,7 +47,11 @@ describe('Application Setup', () => {
         return;
       }
 
-      cy.visit(Cypress.env('url') as string + INSTALL_URL, { failOnStatusCode: false });
+      cy.visit(Cypress.env('url') as string + INSTALL_URL, {
+        failOnStatusCode: false,
+        retryOnNetworkFailure: true,
+        timeout: 60_000,
+      });
       cy.wait(WAIT.long);
 
       cy.get(INSTALL.adminEmail, { timeout: TIMEOUT.actionButton }).clear().type(ADMIN.email);
