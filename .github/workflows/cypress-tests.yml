@@ -1,0 +1,87 @@
+name: Cypress E2E Tests
+
+on:
+  push:
+    branches: [develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  cypress-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Start nopCommerce via Docker Compose
+        run: docker compose -f nopcommerce-docker/docker-compose.yml up -d
+
+      - name: Wait for nopCommerce to be healthy
+        run: |
+          echo "Waiting for nopCommerce at http://localhost:8080..."
+          timeout=300
+          elapsed=0
+          until curl -sf -o /dev/null http://localhost:8080 || [ $elapsed -ge $timeout ]; do
+            sleep 10
+            elapsed=$((elapsed + 10))
+            echo "  Still waiting... ${elapsed}s"
+          done
+          if [ $elapsed -ge $timeout ]; then
+            echo "ERROR: nopCommerce did not start within ${timeout}s"
+            docker compose -f nopcommerce-docker/docker-compose.yml logs
+            exit 1
+          fi
+          echo "nopCommerce is ready!"
+
+      - name: Create secured.env
+        run: |
+          cat > secured.env <<'EOF'
+          CYPRESS_BASE_URL=http://localhost:8080
+          CYPRESS_ADMIN_URL=http://localhost:8080
+          CYPRESS_CUSTOMER_EMAIL=acsanjeevi@gmail.com
+          CYPRESS_CUSTOMER_PASSWORD=Test@1234
+          CYPRESS_CUSTOMER_USERNAME=Sanjeevi
+          CYPRESS_ADMIN_EMAIL=admin@yourstore.com
+          CYPRESS_ADMIN_PASSWORD=admin
+          CYPRESS_ENCRYPTION_KEY=ecommerce-aes-secret-key-2026
+          CYPRESS_ROLE=admin
+          CYPRESS_REPORT_FILENAME=[name]-report
+          EOF
+
+      - name: Run Cypress tests
+        run: node run-all-modules.mjs
+
+      - name: Upload HTML test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-html-report
+          path: cypress/reports/*.html
+          retention-days: 30
+
+      - name: Upload screenshots on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots/
+          retention-days: 14
+
+      - name: Upload test videos on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-videos
+          path: cypress/videos/
+          retention-days: 14
