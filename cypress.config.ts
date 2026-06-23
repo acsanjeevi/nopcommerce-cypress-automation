@@ -145,6 +145,7 @@ export default defineConfig({
       'cypress/e2e/orders/orders-overview.cy.ts',
       'cypress/e2e/cart/cart-overview.cy.ts',
       'cypress/e2e/api/api-tests.cy.ts',
+      'cypress/e2e/mobile/mobile-viewport-testing.cy.ts',
       'cypress/e2e/order-journey/order-journey.cy.ts',
       'cypress/e2e/deleterecords/wipeout-allcreatedrecords.cy.ts',
     ],

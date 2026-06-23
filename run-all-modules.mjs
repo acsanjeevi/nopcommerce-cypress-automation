@@ -33,6 +33,7 @@ const PHASES = [
     'cypress/e2e/orders/orders-overview.cy.ts',
     'cypress/e2e/cart/cart-overview.cy.ts',
     'cypress/e2e/api/api-tests.cy.ts',
+    'cypress/e2e/mobile/mobile-viewport-testing.cy.ts',
   ]},
   { name: 'Phase 5 — E2E Journey',  par: false, specs: ['cypress/e2e/order-journey/order-journey.cy.ts'] },
   { name: 'Phase 6 — Cleanup',      par: false, specs: ['cypress/e2e/deleterecords/wipeout-allcreatedrecords.cy.ts'] },
