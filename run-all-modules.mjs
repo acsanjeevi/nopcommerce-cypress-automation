@@ -194,6 +194,12 @@ try {
   console.log('\nGenerating standalone HTML report...');
   execSync('node generate-html-report.mjs', { stdio: 'inherit' });
 
+  console.log('\nSaving run history...');
+  execSync('node save-run-history.mjs', { stdio: 'inherit' });
+
+  console.log('\nGenerating trend dashboard...');
+  execSync('node generate-trend-dashboard.mjs', { stdio: 'inherit' });
+
   if (failures > 0) process.exit(1);
 
 } catch (err) {

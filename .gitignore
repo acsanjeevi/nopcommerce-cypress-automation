@@ -10,6 +10,7 @@ cypress/reports/
 cypress/screenshots/
 cypress/videos/
 cypress/downloads/
+test-history/
 
 # ── Chrome automation profile (binary, large, user-specific) ─────────────────
 cypress/chrome-profile/

@@ -29,6 +29,8 @@ const moduleLabels = {
   'users-overview':             'Customer Admin',
   'orders-overview':            'Order Admin',
   'cart-overview':              'Storefront Validation',
+  'api-tests':                  'API Tests',
+  'mobile-viewport-testing':    'Mobile Viewport Testing',
   'order-journey':              'End-to-End Purchase Journey',
   'wipeout-allcreatedrecords':  'Data Cleanup',
 };
