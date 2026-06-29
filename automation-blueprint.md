@@ -120,7 +120,7 @@ Derive and split the above scenarios into the following modules, each with creat
 | `mochawesome`                          | `^7.1.3`     | Reporter engine                               |
 | `mochawesome-merge`                    | `^4.3.0`     | Merge per-spec JSON reports into one          |
 | `marge` (mochawesome-report-generator) | `^1.0.1`     | Generate final HTML from merged JSON          |
-| `jsonwebtoken` + `@types/jsonwebtoken` | `^9.0.2`     | Decode JWT tokens for Azure AD login bypass   |
+| `jsonwebtoken` + `@types/jsonwebtoken` | `^9.0.2`     | Decode JWT tokens for session validation      |
 | `cypress-wait-until`                   | `^3.0.2`     | `cy.waitUntil()` utility                      |
 | `nodemailer`                           | `^7.0.7`     | Send test reports by email (optional)         |
 | `vite`                                 | `^6.4.1`     | Bundler used by Cypress NX preset (NX only)   |
@@ -366,8 +366,8 @@ mkdir -p docs
     │   ├── e2e.ts                           ← Bootstrap: imports all business-function files
     │   ├── commands.ts                      ← Shared cross-module Cypress commands
     │   ├── index.d.ts                       ← TypeScript declarations for ALL cy.* commands
-    │   ├── authentication.ts                ← Azure AD / OAuth login-bypass helper
-    │   ├── auth-settings.json               ← Azure AD credentials (gitignored)
+    │   ├── authentication.ts                ← Admin / storefront login helper
+    │   ├── auth-settings.json               ← Login credentials (gitignored)
     │   ├── app.po.ts                        ← Minimal page-object stub
     │   └── preservedata.ts                  ← Session/localStorage preservation
     ├── business-function/
@@ -693,9 +693,9 @@ Cypress.Commands.add(
     isSearchApi = false
   ) => {
     cy.log(`Searching for record: ${recordsName}`);
-    CommonPage.clickOnButton(selectors.pkiSelectors.searchField);
+    CommonPage.clickOnButton(selectors.gridSelectors.searchField);
     cy.waitForSpinnerToDisappear();
-    CommonPage.enterText(selectors.pkiSelectors.searchInput, recordsName);
+    CommonPage.enterText(selectors.gridSelectors.searchInput, recordsName);
 
     if (!isSearchApi) {
       cy.intercept('GET', searchApi).as('searchInterceptAlias');
@@ -719,10 +719,10 @@ Cypress.Commands.add(
           .within(() => {
             cy.get('td i.pi-ellipsis-v').should('be.visible').click();
           });
-        CommonPage.clickOnButton(selectors.pkiSelectors.deleteMenuButton);
+        CommonPage.clickOnButton(selectors.gridSelectors.deleteMenuButton);
         CommonPage.deleteConfirmation(confirmationMessage, recordsName);
         cy.intercept('DELETE', deleteApi).as('deleteApiAlias');
-        CommonPage.clickOnButton(selectors.pkiSelectors.deleteButton);
+        CommonPage.clickOnButton(selectors.gridSelectors.deleteButton);
         cy.wait('@deleteApiAlias').then((interception) => {
           const statusCode = interception.response?.statusCode ?? 0;
           expect(statusCode).to.be.oneOf([200, 204]);
@@ -753,7 +753,7 @@ Cypress.Commands.add(
   'searchAndValidateInTable',
   (searchText: string, searchApi: string) => {
     cy.intercept('GET', searchApi).as('searchInterceptAlias');
-    CommonPage.enterText(selectors.pkiSelectors.searchInput, searchText);
+    CommonPage.enterText(selectors.gridSelectors.searchInput, searchText);
     cy.wait('@searchInterceptAlias');
     cy.waitForSpinnerToDisappear();
     cy.get('table tbody tr', { timeout: 10000 }).should('exist');
@@ -891,7 +891,7 @@ import apiEndpoints from '../fixtures/common/all-module-api-endpoints.json';
 /** Navigate to the Add <Module> page and assert URL contains /<module>/add */
 Cypress.Commands.add('clickOnAdd<Module>', () => {
   cy.waitForSpinnerToDisappear();
-  cy.get(commonSelectors.pkiSelectors.addButton, { timeout: 30000 })
+  cy.get(commonSelectors.gridSelectors.addButton, { timeout: 30000 })
     .should('be.visible')
     .should('not.be.disabled')
     .click();
@@ -964,7 +964,7 @@ Cypress.Commands.add('validate<Module>ContextMenu', () => {
 
 ```json
 {
-  "pkiSelectors": {
+  "gridSelectors": {
     "breadCrumb": ".topbar-breadcrumb",
     "addButton": "[label='Add']",
     "searchField": "#search",
@@ -1382,9 +1382,9 @@ downloads/
 
 | Purpose              | Pattern                                | Example                             |
 | -------------------- | -------------------------------------- | ----------------------------------- |
-| Navigate to add page | `clickOnAdd<Module>()`                 | `cy.clickOnAddGateway()`            |
+| Navigate to add page | `clickOnAdd<Module>()`                 | `cy.clickOnAddProduct()`            |
 | Load overview page   | `load<Module>Overview()`               | `cy.loadUserOverview()`             |
-| Create a record      | `create<Module>(data)`                 | `cy.createGateway(data)`            |
+| Create a record      | `create<Module>(data)`                 | `cy.createProduct(data)`            |
 | Edit a record        | `edit<Module>(name)`                   | `cy.editUser('TestUser')`           |
 | Delete records       | `deleteRecords(...)`                   | shared — do not recreate per module |
 | Search in table      | `searchAndValidateInTable(text, api)`  | shared                              |

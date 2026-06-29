@@ -1,5 +1,5 @@
 {
-  "pkiSelectors": {
+  "gridSelectors": {
     "breadCrumb": ".topbar-breadcrumb",
     "addButton": "[label='Add']",
     "searchField": "#search",
