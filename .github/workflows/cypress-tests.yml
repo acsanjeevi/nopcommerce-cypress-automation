@@ -1,10 +1,24 @@
 name: Cypress E2E Tests
 
 on:
+  # Trigger on code changes
   push:
     branches: [develop]
   pull_request:
     branches: [main]
+
+  # Scheduled daily run — 6:00 AM IST (00:30 UTC)
+  # Runs every day; ideal time: before work starts, fresh results on dashboard
+  schedule:
+    - cron: '30 0 * * *'
+
+  # Manual trigger from GitHub Actions UI
+  workflow_dispatch:
+    inputs:
+      browser:
+        description: 'Browser to test (chrome, firefox, edge, or all)'
+        required: false
+        default: 'chrome'
 
 jobs:
   cypress-tests:
@@ -14,7 +28,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        browser: [chrome, firefox, edge]
+        browser: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.browser != 'all' && fromJson(format('["{0}"]', github.event.inputs.browser)) || fromJson('["chrome","firefox","edge"]') }}
 
     name: Tests — ${{ matrix.browser }}
 
@@ -44,7 +58,7 @@ jobs:
           sudo apt-get install -y microsoft-edge-stable
 
       - name: Start nopCommerce via Docker Compose
-        run: docker compose -f nopcommerce-docker/docker-compose.yml up -d
+        run: docker compose up -d
 
       - name: Wait for nopCommerce to be healthy
         run: |
@@ -58,7 +72,7 @@ jobs:
           done
           if [ $elapsed -ge $timeout ]; then
             echo "ERROR: nopCommerce did not start within ${timeout}s"
-            docker compose -f nopcommerce-docker/docker-compose.yml logs
+            docker compose logs
             exit 1
           fi
           echo "nopCommerce is ready! Waiting 30s for full stabilization..."
@@ -91,6 +105,22 @@ jobs:
           name: cypress-html-report-${{ matrix.browser }}
           path: cypress/reports/*.html
           retention-days: 30
+
+      - name: Upload trend dashboard
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: trend-dashboard-${{ matrix.browser }}
+          path: test-history/trend-dashboard.html
+          retention-days: 30
+
+      - name: Upload test history data
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-history-${{ matrix.browser }}
+          path: test-history/*.json
+          retention-days: 90
 
       - name: Upload screenshots on failure
         if: failure()
