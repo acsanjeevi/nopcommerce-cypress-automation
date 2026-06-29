@@ -122,6 +122,15 @@ jobs:
           path: test-history/*.json
           retention-days: 90
 
+      - name: Send test report email
+        if: always()
+        env:
+          BROWSER: ${{ matrix.browser }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          REPORT_EMAIL: acsanjeevi@gmail.com
+        run: node send-report-email.mjs || echo "Email send skipped (SMTP secrets not configured)"
+
       - name: Upload screenshots on failure
         if: failure()
         uses: actions/upload-artifact@v4
