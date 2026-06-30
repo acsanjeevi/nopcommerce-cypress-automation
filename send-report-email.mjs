@@ -8,7 +8,7 @@ const JSONS_DIR   = 'cypress/reports/.jsons';
 
 const TO_EMAIL      = process.env.REPORT_EMAIL || 'acsanjeevi@gmail.com';
 const SMTP_HOST     = process.env.SMTP_HOST    || 'smtp.gmail.com';
-const SMTP_PORT     = parseInt(process.env.SMTP_PORT || '465', 10);
+const SMTP_PORT     = parseInt(process.env.SMTP_PORT || '587', 10);
 const SMTP_USER     = process.env.SMTP_USER;
 const SMTP_PASS     = process.env.SMTP_PASS;
 const BROWSER       = process.env.BROWSER || 'chrome';
@@ -170,8 +170,10 @@ const htmlBody = `
 const transporter = nodemailer.createTransport({
   host: SMTP_HOST,
   port: SMTP_PORT,
-  secure: SMTP_PORT === 465,
+  secure: false,
+  requireTLS: true,
   auth: { user: SMTP_USER, pass: SMTP_PASS },
+  tls: { rejectUnauthorized: false },
 });
 
 try {
