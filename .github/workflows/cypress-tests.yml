@@ -75,8 +75,8 @@ jobs:
             docker compose logs
             exit 1
           fi
-          echo "nopCommerce is ready! Waiting 30s for full stabilization..."
-          sleep 30
+          echo "nopCommerce is ready! Waiting 60s for full stabilization..."
+          sleep 60
 
       - name: Create secured.env
         run: |

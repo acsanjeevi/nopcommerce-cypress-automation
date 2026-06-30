@@ -158,6 +158,14 @@ export default defineConfig({
         if (browser.name === 'chrome') {
           CHROME_FLAGS.forEach((flag) => launchOptions.args.push(flag));
         }
+        if (browser.name === 'firefox') {
+          // Fix ECONNRESET on Linux CI: Firefox network stack is stricter about
+          // keep-alive and connection resets from ASP.NET Core / Kestrel.
+          launchOptions.preferences['network.http.connection-timeout']                   = 90;
+          launchOptions.preferences['network.http.max-persistent-connections-per-server'] = 16;
+          launchOptions.preferences['network.http.connection-retry-count']               = 5;
+          launchOptions.preferences['network.http.keep-alive.timeout']                   = 90;
+        }
         return launchOptions;
       });
 
