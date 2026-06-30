@@ -123,14 +123,57 @@ jobs:
           path: test-history/*.json
           retention-days: 90
 
+      - name: Build email summary
+        if: always()
+        id: summary
+        run: |
+          node -e "
+          import { readFileSync, readdirSync, existsSync } from 'fs';
+          const dir = 'cypress/reports/.jsons';
+          let total=0,passed=0,failed=0;
+          const labels = {
+            'nopcommerce-setup':'Application Setup','categories-creation':'Category Management',
+            'products-creation':'Product Management','users-creation':'Customer Management',
+            'cart-creation':'Cart & Checkout','categories-overview':'Category Admin',
+            'products-overview':'Product Admin','users-overview':'Customer Admin',
+            'orders-overview':'Order Admin','cart-overview':'Storefront Validation',
+            'api-tests':'API Tests','mobile-viewport-testing':'Mobile Viewport',
+            'order-journey':'E2E Purchase Journey','wipeout-allcreatedrecords':'Data Cleanup'
+          };
+          let rows='';
+          if(existsSync(dir)){
+            readdirSync(dir).filter(f=>f.endsWith('.json')).forEach(f=>{
+              const s=JSON.parse(readFileSync('cypress/reports/.jsons/'+f,'utf8')).stats||{};
+              total+=s.tests||0; passed+=s.passes||0; failed+=s.failures||0;
+              const key=f.replace('-report.json','');
+              const pct=s.tests>0?((s.passes/s.tests)*100).toFixed(0)+'%':'—';
+              rows+=\`<tr><td style='padding:8px 12px;border-bottom:1px solid #eee'>\${failed>0?'❌':'✅'} \${labels[key]||key}</td><td style='padding:8px 12px;border-bottom:1px solid #eee;text-align:center'>\${s.tests||0}</td><td style='padding:8px 12px;border-bottom:1px solid #eee;text-align:center;color:#22c55e;font-weight:700'>\${s.passes||0}</td><td style='padding:8px 12px;border-bottom:1px solid #eee;text-align:center;color:\${(s.failures||0)>0?'#ef4444':'#888'};font-weight:700'>\${s.failures||0}</td><td style='padding:8px 12px;border-bottom:1px solid #eee;text-align:center'>\${pct}</td></tr>\`;
+            });
+          }
+          const rate=total>0?((passed/total)*100).toFixed(1):0;
+          const status=failed>0?'FAIL':'PASS';
+          const body=\`<div style='font-family:Segoe UI,Arial,sans-serif;max-width:680px;margin:0 auto'><div style='background:linear-gradient(135deg,#1a1a2e,#0f3460);color:#fff;padding:28px 32px;border-radius:10px 10px 0 0'><h1 style='margin:0;font-size:20px'>nopCommerce — Daily Test Report</h1><p style='margin:6px 0 0;font-size:13px;color:#a0aec0'>Browser: ${{ matrix.browser }} | Automated CI Pipeline</p></div><div style='padding:20px 32px;background:#f8fafc;display:flex;gap:12px;flex-wrap:wrap;text-align:center'><div style='background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:14px 20px'><div style='font-size:28px;font-weight:800;color:\${failed>0?'#ef4444':'#22c55e'}'>\${rate}%</div><div style='font-size:11px;color:#718096'>PASS RATE</div></div><div style='background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:14px 20px'><div style='font-size:28px;font-weight:800'>\${total}</div><div style='font-size:11px;color:#718096'>TOTAL</div></div><div style='background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:14px 20px'><div style='font-size:28px;font-weight:800;color:#22c55e'>\${passed}</div><div style='font-size:11px;color:#718096'>PASSED</div></div><div style='background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:14px 20px'><div style='font-size:28px;font-weight:800;color:\${failed>0?'#ef4444':'#888'}'>\${failed}</div><div style='font-size:11px;color:#718096'>FAILED</div></div></div><div style='padding:20px 32px'><table style='width:100%;border-collapse:collapse;font-size:13px'><thead><tr style='background:#1a1a2e;color:#fff'><th style='padding:8px 12px;text-align:left'>Module</th><th style='padding:8px 12px;text-align:center'>Tests</th><th style='padding:8px 12px;text-align:center'>Pass</th><th style='padding:8px 12px;text-align:center'>Fail</th><th style='padding:8px 12px;text-align:center'>Rate</th></tr></thead><tbody>\${rows}</tbody></table></div><div style='padding:14px 32px;background:#1a1a2e;color:#a0aec0;font-size:11px;text-align:center;border-radius:0 0 10px 10px'>nopCommerce Automation | Full HTML report + Trend Dashboard attached</div></div>\`;
+          const fs2=await import('fs');
+          fs2.writeFileSync('/tmp/email-body.html',body,'utf8');
+          fs2.writeFileSync('/tmp/email-subject.txt',\`\${status} | nopCommerce Tests — \${rate}% (\${passed}/\${total}) | ${{ matrix.browser }}\`,'utf8');
+          console.log('subject='+status+'|'+rate+'%');
+          " --input-type=module
+
       - name: Send test report email
         if: always()
-        env:
-          BROWSER: ${{ matrix.browser }}
-          SMTP_USER: ${{ secrets.SMTP_USER }}
-          SMTP_PASS: ${{ secrets.SMTP_PASS }}
-          REPORT_EMAIL: acsanjeevi@gmail.com
-        run: node send-report-email.mjs || echo "Email send skipped (SMTP secrets not configured)"
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.SMTP_USER }}
+          password: ${{ secrets.SMTP_PASS }}
+          subject: ${{ format('{0} | nopCommerce Tests | {1} | {2}', job.status == 'success' && 'PASS' || 'FAIL', matrix.browser, github.run_number) }}
+          to: acsanjeevi@gmail.com
+          from: nopCommerce Test Bot <${{ secrets.SMTP_USER }}>
+          html_body: file:///tmp/email-body.html
+          attachments: cypress/reports/*.html,test-history/trend-dashboard.html
+          ignore_cert: true
 
       - name: Upload screenshots on failure
         if: failure()
