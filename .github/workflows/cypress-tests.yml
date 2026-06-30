@@ -78,23 +78,18 @@ jobs:
           echo "nopCommerce is ready! Waiting 60s for full stabilization..."
           sleep 60
 
-      - name: Pre-warm connection pool for Firefox
-        if: matrix.browser == 'firefox'
-        run: |
-          echo "Warming up nopCommerce connection pool for Firefox proxy..."
-          for i in 1 2 3 4 5 6 7 8 9 10; do
-            curl -sf -o /dev/null http://localhost:8080 || true
-            curl -sf -o /dev/null http://localhost:8080/login || true
-            sleep 3
-          done
-          echo "Connection pool warmed. Waiting 10s before tests..."
-          sleep 10
-
       - name: Create secured.env
         run: |
-          cat > secured.env <<'EOF'
-          CYPRESS_BASE_URL=http://localhost:8080
-          CYPRESS_ADMIN_URL=http://localhost:8080
+          # Firefox on Linux resolves 'localhost' as IPv6 (::1) but Docker
+          # binds only on IPv4 (127.0.0.1) — use explicit IP to fix ECONNRESET
+          if [ "${{ matrix.browser }}" = "firefox" ]; then
+            BASE_URL="http://127.0.0.1:8080"
+          else
+            BASE_URL="http://localhost:8080"
+          fi
+          cat > secured.env <<EOF
+          CYPRESS_BASE_URL=${BASE_URL}
+          CYPRESS_ADMIN_URL=${BASE_URL}
           CYPRESS_CUSTOMER_EMAIL=acsanjeevi@gmail.com
           CYPRESS_CUSTOMER_PASSWORD=Test@1234
           CYPRESS_CUSTOMER_USERNAME=Sanjeevi
