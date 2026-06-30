@@ -161,19 +161,9 @@ jobs:
 
       - name: Send test report email
         if: always()
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: ${{ secrets.SMTP_HOST }}
-          server_port: 587
-          secure: false
-          username: ${{ secrets.SMTP_USER }}
-          password: ${{ secrets.SMTP_PASS }}
-          subject: ${{ format('{0} | nopCommerce Tests | {1} | Run {2}', job.status == 'success' && 'PASS' || 'FAIL', matrix.browser, github.run_number) }}
-          to: acsanjeevi@gmail.com
-          from: nopCommerce Test Bot <${{ secrets.SMTP_USER }}>
-          html_body: file:///tmp/email-body.html
-          attachments: cypress/reports/*.html,test-history/trend-dashboard.html
-          ignore_cert: true
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+        run: node send-report-email-resend.mjs
 
       - name: Upload screenshots on failure
         if: failure()
